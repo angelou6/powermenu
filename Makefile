@@ -14,8 +14,8 @@ build:
 install: build
 	install -Dm755 powermenu /usr/local/bin/powermenu
 
-local-install: build
-	install -Dm755 powermenu ~/.local/share/bin/powermenu
+local_install: build
+	install -Dm755 powermenu ~/.local/bin/powermenu
 
 clean:
 	rm $(OUT)
