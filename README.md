@@ -1,13 +1,16 @@
 # Powermenu
+![powermenu image](https://raw.githubusercontent.com/angelou6/powermenu/refs/heads/master/example-config/readme_image.png)
 
 ## How to compile
-
-Install the dependencies.
 
 Arch Linux
 ```sh
 sudo pacman -S gtk4-layer-shell vala base-devel gtk4
 ```
+
+`gtk4-layer-shell` is a dependency for the application.
+
+## Instalation
 
 To install on /usr/local/bin/
 ```sh
