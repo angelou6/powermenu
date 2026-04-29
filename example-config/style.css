@@ -1,0 +1,33 @@
+:root {
+  --bg: #1d2021;
+  --bg2: #3c3836;
+  --fg: #ebdbb2;
+  --cyan: #8ec07c;
+  --red: #cc241d;
+  --green: #98971a;
+  --blue: #458588;
+}
+
+window {
+  border-radius: 10px;
+}
+
+button {
+  margin: 10px;
+  border: 1px solid var(--cyan);
+  background: var(--bg);
+  font-size: 2em;
+  font-family: "Ubuntu Nerd Font Propo Med";
+}
+
+.shutdown { color: var(--red); }
+.reboot   { color: var(--fg); }
+.suspend  { color: var(--green); }
+.logout   { color: var(--blue); }
+
+button:hover, button:focus {
+  background-image: none;
+  background-color: var(--bg2);
+  color: var(--fg);
+}
+

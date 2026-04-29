@@ -1,0 +1,21 @@
+.PHONY: build install local_install
+
+OUT = powermenu
+FILES = src/main.vala src/config.vala
+PACKAGES = --pkg gtk4 --pkg posix --pkg gtk4-layer-shell-0
+
+
+build_debug:
+	valac $(PACKAGES) $(FILES) --output powermenu
+
+build:
+	valac -X -O2 -X -DNDEBUG -X -s --disable-assert $(PACKAGES) $(FILES) --output powermenu
+
+install: build
+	install -Dm755 powermenu /usr/local/bin/powermenu
+
+local-install: build
+	install -Dm755 powermenu ~/.local/share/bin/powermenu
+
+clean:
+	rm $(OUT)
