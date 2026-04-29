@@ -26,8 +26,10 @@ GenericArray<PowerItem> parse_config(string location) {
     }
   } catch (KeyFileError e) {
     stderr.printf ("Configuration error: %s\n", e.message);
+    Process.exit(1);
   } catch (FileError e) {
     stderr.printf ("File error: %s\n", e.message);
+    Process.exit(1);
   }
 
   return items;
