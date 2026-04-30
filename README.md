@@ -8,7 +8,7 @@ Arch Linux
 sudo pacman -S gtk4-layer-shell vala base-devel gtk4
 ```
 
-`gtk4-layer-shell` is a dependency for the application.
+`gtk4-layer-shell` is a dependency for powermenu.
 
 ## Instalation
 
@@ -23,9 +23,9 @@ make local_install
 ```
 
 ## Configuration
-The configuration should be located in `.config/powermenu`.
+The configuration needs to be located in `.config/powermenu/`.
 
-config.ini
+`config.ini`
 ```ini
 icon=⏻
 command=poweroff
@@ -44,7 +44,8 @@ command=hyprctl dispatch exit 0
 ```
 
 You can style powermenu using css.
-# style.css
+
+`style.css`
 ```css
 :root {
   --bg: #1d2021;
