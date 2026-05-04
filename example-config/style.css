@@ -10,7 +10,7 @@
 
 window {
   /* border-radius: 10px; */
-  background: rgba(0,0,0, 0.0);
+  background: rgba(0, 0, 0, 0);
 }
 
 button {
@@ -21,14 +21,23 @@ button {
   font-family: "Ubuntu Nerd Font Propo Med";
 }
 
-.shutdown { color: var(--red); }
-.reboot   { color: var(--fg); }
-.suspend  { color: var(--green); }
-.logout   { color: var(--blue); }
-
-button:hover, button:focus {
-  background-image: none;
-  background-color: var(--bg2);
+.shutdown {
+  color: var(--red);
+}
+.reboot {
   color: var(--fg);
 }
+.suspend {
+  color: var(--green);
+}
+.logout {
+  color: var(--blue);
+}
 
+button:hover,
+button:focus {
+  background-image: none;
+  background-color: var(--bg2);
+  border-color: var(--blue);
+  color: var(--fg);
+}
