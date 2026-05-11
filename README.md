@@ -1,10 +1,10 @@
 # Powermenu
 
-![powermenu image](https://raw.githubusercontent.com/angelou6/powermenu/refs/heads/master/example-config/readme_image.png)
+![powermenu image](https://raw.githubusercontent.com/angelou6/powermenu/refs/heads/master/readme_image.png)
 
 ## How to compile
 
-Arch Linux
+**Arch Linux:**
 
 ```sh
 sudo pacman -S gtk4-layer-shell vala base-devel gtk4
@@ -28,6 +28,6 @@ make local_install
 
 ## Configuration
 
-The configuration needs to be located in `.config/powermenu/`.
+The configuration needs to be located in `~/.config/powermenu/`.
 
 You can find an example config in [/example-config](/example-config)
