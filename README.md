@@ -1,6 +1,6 @@
 # Powermenu
 
-![powermenu image](https://raw.githubusercontent.com/angelou6/powermenu/refs/heads/master/readme_image.png)
+![powermenu image](/readme_image.png)
 
 ## How to compile
 
