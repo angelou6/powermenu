@@ -23,7 +23,7 @@ sudo make install
 or to install on ~/.local/bin/
 
 ```sh
-make local_install
+make install PREFIX=~/.local
 ```
 
 ## Configuration

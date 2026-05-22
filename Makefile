@@ -3,7 +3,7 @@
 BIN = powermenu
 FILES = src/main.vala src/config.vala
 PACKAGES = --pkg gtk4 --pkg posix --pkg gtk4-layer-shell-0
-PREFIX ?= /usr
+PREFIX ?= /usr/local
 
 build_debug:
 	valac $(PACKAGES) $(FILES) --output BIN
