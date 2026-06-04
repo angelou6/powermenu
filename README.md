@@ -2,7 +2,9 @@
 
 ![powermenu image](/readme_image.png)
 
-## How to compile
+## Instalation
+
+First install the dependencies.
 
 **Arch Linux:**
 
@@ -11,8 +13,6 @@ sudo pacman -S gtk4-layer-shell vala base-devel gtk4
 ```
 
 `gtk4-layer-shell` is a dependency for powermenu.
-
-## Instalation
 
 To install on /usr/local/bin/
 
