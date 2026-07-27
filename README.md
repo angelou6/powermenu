@@ -30,4 +30,4 @@ make install PREFIX=~/.local
 
 The configuration needs to be located in `~/.config/powermenu/`.
 
-You can find an example config in [/example-config](/example-config)
+You can find an example config in [/example-config](example-config)
