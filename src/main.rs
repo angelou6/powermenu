@@ -1,5 +1,6 @@
-use std::path::Path;
+use std::path::PathBuf;
 use std::process::Command;
+use std::sync::OnceLock;
 
 use anyhow::Result;
 use gtk::gdk::{Display, Key};
@@ -12,6 +13,13 @@ use gtk4_layer_shell::{KeyboardMode, Layer, LayerShell};
 use crate::config::{Item, parse_config};
 
 mod config;
+
+struct Args {
+    config: PathBuf,
+    css: PathBuf,
+}
+
+static CLI_ARGS: OnceLock<Args> = OnceLock::new();
 
 fn create_controller(window: &ApplicationWindow) -> EventControllerKey {
     let controller = EventControllerKey::builder().build();
@@ -31,14 +39,6 @@ fn create_controller(window: &ApplicationWindow) -> EventControllerKey {
                 window.child_focus(gtk::DirectionType::Right);
                 glib::Propagation::Stop
             }
-            // Key::j => {
-            //     window.child_focus(gtk::DirectionType::Down);
-            //     glib::Propagation::Stop
-            // }
-            // Key::k => {
-            //     window.child_focus(gtk::DirectionType::Up);
-            //     glib::Propagation::Stop
-            // }
             _ => glib::Propagation::Proceed,
         }
     });
@@ -46,9 +46,10 @@ fn create_controller(window: &ApplicationWindow) -> EventControllerKey {
     controller
 }
 
-fn load_css(location: &str) {
+fn load_css() {
+    let args = CLI_ARGS.get().unwrap();
     let provider = CssProvider::new();
-    let f = File::for_path(location);
+    let f = File::for_path(args.css.clone());
     provider.load_from_file(&f);
 
     gtk::style_context_add_provider_for_display(
@@ -63,11 +64,8 @@ fn build_box() -> Result<Box, anyhow::Error> {
         .orientation(gtk::Orientation::Horizontal)
         .build();
 
-    let conf_path = Path::new(&home_dir())
-        .join(".config")
-        .join("powermenu")
-        .join("config.toml");
-    for (key, value) in parse_config(conf_path.to_str().unwrap())? {
+    let args = CLI_ARGS.get().unwrap();
+    for (key, value) in parse_config(&args.config)? {
         let item: Item = value.clone().try_into()?;
         let btn = Button::builder()
             .width_request(100)
@@ -115,13 +113,42 @@ fn activate(app: &Application) {
 }
 
 fn main() -> glib::ExitCode {
-    let style_path = Path::new(&home_dir())
-        .join(".config")
-        .join("powermenu")
-        .join("style.css");
-
     let app = Application::builder().build();
-    app.connect_startup(move |_| load_css(style_path.to_str().unwrap()));
+    app.connect_startup(|_| load_css());
+
+    app.add_main_option(
+        "config",
+        glib::Char::from(b'c'),
+        glib::OptionFlags::NONE,
+        glib::OptionArg::Filename,
+        "Path to config file",
+        None,
+    );
+
+    app.add_main_option(
+        "css",
+        glib::Char::from(b's'),
+        glib::OptionFlags::NONE,
+        glib::OptionArg::Filename,
+        "Path to css file",
+        None,
+    );
+
+    app.connect_handle_local_options(|_app, options| {
+        let mut config: PathBuf = home_dir().join(".config/powermenu/config.toml");
+        let mut css: PathBuf = home_dir().join(".config/powermenu/style.css");
+
+        if let Some(config_variant) = options.lookup_value("config", None) {
+            config = config_variant.get().unwrap();
+        }
+        if let Some(css_variant) = options.lookup_value("css", None) {
+            css = css_variant.get().unwrap();
+        }
+
+        CLI_ARGS.set(Args { config, css }).ok();
+        std::ops::ControlFlow::Continue(())
+    });
+
     app.connect_activate(activate);
 
     app.run()

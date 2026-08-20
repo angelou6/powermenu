@@ -4,7 +4,9 @@
 
 ## Instalation
 
-First install the build dependencies.
+`gtk4-layer-shell` is necesary for powermenu to work.
+
+### Requirements
 
 **Arch Linux:**
 
@@ -15,13 +17,24 @@ sudo pacman -S gtk4-layer-shell base-devel gtk4 libadwaita meson desktop-file-ut
 **OpenSUSE Tumbleweed:**
 
 ```sh
-sudo zypper in gtk4-devel libadwaita-devel meson vala gtk4-layer-shell-devel desktop-file-utils
+sudo zypper in gtk4-devel libadwaita-devel meson gtk4-layer-shell-devel desktop-file-utils
 ```
 
-`gtk4-layer-shell` is necesary for powermenu to work.
+### Compile
+
+```sh
+cargo build --release
+```
 
 ## Configuration
 
 The configuration needs to be located in `~/.config/powermenu/`.
 
 You can find an example config in [/example-config](example-config)
+
+The path for configuration and css can also be changed using the following flags:
+
+```
+-c, --config              Path to config file
+-s, --css                 Path to css file
+```
