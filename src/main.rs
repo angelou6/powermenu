@@ -1,5 +1,5 @@
 use std::path::PathBuf;
-use std::process::Command;
+use std::process::{self, Command};
 use std::sync::OnceLock;
 
 use anyhow::Result;
@@ -77,7 +77,7 @@ fn build_box() -> Result<Box, anyhow::Error> {
         btn.connect_clicked(move |_| {
             if let Err(err) = (|| -> Result<()> {
                 Command::new("sh").args(["-c", &item.command]).spawn()?;
-                Ok(())
+                process::exit(0);
             })() {
                 eprintln!("Error: {err}");
             }
