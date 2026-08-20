@@ -1,0 +1,15 @@
+[shutdown]
+icon=""
+command="poweroff"
+
+[reboot]
+icon=""
+command="reboot"
+
+[suspend]
+icon="󰤄"
+command="systemctl suspend"
+
+[logout]
+icon="󰍃"
+command="hyprctl dispatch 'hl.dsp.exit()'"

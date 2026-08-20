@@ -4,27 +4,21 @@
 
 ## Instalation
 
-First install the dependencies.
+First install the build dependencies.
 
 **Arch Linux:**
 
 ```sh
-sudo pacman -S gtk4-layer-shell vala base-devel gtk4
+sudo pacman -S gtk4-layer-shell base-devel gtk4 libadwaita meson desktop-file-utils gcc
 ```
 
-`gtk4-layer-shell` is a dependency for powermenu.
-
-To install on /usr/local/bin/
+**OpenSUSE Tumbleweed:**
 
 ```sh
-sudo make install
+sudo zypper in gtk4-devel libadwaita-devel meson vala gtk4-layer-shell-devel desktop-file-utils
 ```
 
-or to install on ~/.local/bin/
-
-```sh
-make install PREFIX=~/.local
-```
+`gtk4-layer-shell` is necesary for powermenu to work.
 
 ## Configuration
 
