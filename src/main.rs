@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 use std::process::{self, Command};
 use std::sync::OnceLock;
+use std::sync::atomic::{AtomicBool, Ordering};
 
 use anyhow::Result;
 use gtk::gdk::{Display, Key};
@@ -20,6 +21,7 @@ struct Args {
 }
 
 static CLI_ARGS: OnceLock<Args> = OnceLock::new();
+static VERTICAL: AtomicBool = AtomicBool::new(false);
 
 fn create_controller(window: &ApplicationWindow) -> EventControllerKey {
     let controller = EventControllerKey::builder().build();
@@ -37,6 +39,14 @@ fn create_controller(window: &ApplicationWindow) -> EventControllerKey {
             }
             Key::l => {
                 window.child_focus(gtk::DirectionType::Right);
+                glib::Propagation::Stop
+            }
+            Key::j => {
+                window.child_focus(gtk::DirectionType::Down);
+                glib::Propagation::Stop
+            }
+            Key::k => {
+                window.child_focus(gtk::DirectionType::Up);
                 glib::Propagation::Stop
             }
             _ => glib::Propagation::Proceed,
@@ -60,9 +70,12 @@ fn load_css() {
 }
 
 fn build_box() -> Result<Box, anyhow::Error> {
-    let button_box = Box::builder()
-        .orientation(gtk::Orientation::Horizontal)
-        .build();
+    let orientation = if VERTICAL.fetch_and(true, Ordering::SeqCst) {
+        gtk::Orientation::Vertical
+    } else {
+        gtk::Orientation::Horizontal
+    };
+    let button_box = Box::builder().orientation(orientation).build();
 
     let args = CLI_ARGS.get().unwrap();
     for (key, value) in parse_config(&args.config)? {
@@ -124,13 +137,20 @@ fn main() -> glib::ExitCode {
         "Path to config file",
         None,
     );
-
     app.add_main_option(
         "css",
         glib::Char::from(b's'),
         glib::OptionFlags::NONE,
         glib::OptionArg::Filename,
         "Path to css file",
+        None,
+    );
+    app.add_main_option(
+        "vertical",
+        glib::Char::from(b'v'),
+        glib::OptionFlags::NONE,
+        glib::OptionArg::None,
+        "Powermenu vertical mode",
         None,
     );
 
@@ -143,6 +163,9 @@ fn main() -> glib::ExitCode {
         }
         if let Some(css_variant) = options.lookup_value("css", None) {
             css = css_variant.get().unwrap();
+        }
+        if let Some(_) = options.lookup_value("vertical", None) {
+            VERTICAL.store(true, Ordering::Relaxed);
         }
 
         CLI_ARGS.set(Args { config, css }).ok();

@@ -44,4 +44,5 @@ The path for configuration and css can also be changed using the following flags
 ```
 -c, --config              Path to config file
 -s, --css                 Path to css file
+-v, --vertical            Powermenu vertical mode
 ```
