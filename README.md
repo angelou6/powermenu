@@ -20,6 +20,8 @@ sudo pacman -S gtk4-layer-shell base-devel gtk4 libadwaita meson desktop-file-ut
 sudo zypper in gtk4-devel libadwaita-devel meson gtk4-layer-shell-devel desktop-file-utils
 ```
 
+Compile with `cargo build --release` or install it directly with `cargo install`.
+
 ## Configuration
 
 You can find an example config in [/example-config](example-config)
